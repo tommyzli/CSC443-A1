@@ -29,8 +29,10 @@ int get_histogram(FILE *file_ptr,
     *total_bytes_read = 0;
     size_t chunk_read;
 
-    bzero(buffer, block_size * sizeof(char));
-    while((chunk_read = fread(buffer, sizeof(char), block_size, file_ptr)) > 0) {
+    while(*total_bytes_read < file_size) {
+        bzero(buffer, block_size * sizeof(char));
+        chunk_read = fread(buffer, sizeof(char), block_size, file_ptr);
+
         int i;
         for (i = 0; i < chunk_read; i++) {
             char c = buffer[i];
@@ -38,7 +40,6 @@ int get_histogram(FILE *file_ptr,
         }
 
         *total_bytes_read += chunk_read;
-        bzero(buffer, block_size * sizeof(char));
     }
 
     return 0;
