@@ -20,7 +20,6 @@ FILE_SIZE = "104857600"  # 100 MB
 
 if __name__ == "__main__":
     for block_size, name in BLOCK_SIZES:
-        # use block size as file name
         print("---- {} ----".format(name))
         subprocess.call(["./create_random_file", block_size, FILE_SIZE, block_size])
         print("------------")
