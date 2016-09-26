@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
         ftime(&t);
         start_time_in_ms = t.time * 1000 + t.millitm;
-        
+
         fwrite(buffer, sizeof(char), block_size, fp);
         fflush(fp);
 
