@@ -27,18 +27,18 @@ int get_histogram(FILE *file_ptr,
     fseek(file_ptr, 0, SEEK_SET);
 
     *total_bytes_read = 0;
+    size_t chunk_read;
 
-    while (*total_bytes_read != file_size) {
-        bzero(buffer, block_size * sizeof(char));
-        int chunk_read = fread(buffer, sizeof(char), block_size * sizeof(char), file_ptr);
-
+    bzero(buffer, block_size * sizeof(char));
+    while((chunk_read = fread(buffer, sizeof(char), block_size, file_ptr)) > 0) {
         int i;
-        for (i = 0; i < histogram_length; i++) {
+        for (i = 0; i < chunk_read; i++) {
             char c = buffer[i];
             hist[get_position_in_alphabet(c)]++;
         }
 
         *total_bytes_read += chunk_read;
+        bzero(buffer, block_size * sizeof(char));
     }
 
     return 0;
