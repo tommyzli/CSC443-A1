@@ -22,8 +22,8 @@ int get_histogram(FILE *file_ptr,
     for (j = 0; j < histogram_length; j++) {
         hist[j] = 0;
     }
-	*miliseconds = 0;
-	*total_bytes_read = 0;
+    *miliseconds = 0;
+    *total_bytes_read = 0;
 
     fseek(file_ptr, 0, SEEK_END);
     long file_size = ftell(file_ptr);
@@ -38,12 +38,12 @@ int get_histogram(FILE *file_ptr,
     while(*total_bytes_read < file_size) {
         bzero(buffer, block_size * sizeof(char));
 
-		ftime(&t);
+        ftime(&t);
         start_time_in_ms = t.time * 1000 + t.millitm;
 
         chunk_read = fread(buffer, sizeof(char), block_size, file_ptr);
 
-		ftime(&t);
+        ftime(&t);
         time_diff = t.time * 1000 + t.millitm - start_time_in_ms;
         *miliseconds += time_diff;
 
@@ -88,9 +88,9 @@ int main(int argc, char* argv[]) {
         printf("%c %ld\n", i + 'A', hist[i]);
     }
 
-	printf("BLOCK SIZE %ld bytes\n", block_size);
-	printf("TOTAL BYTES %ld bytes\n", filelen);
-	printf("TIME %ld miliseconds\n", miliseconds);
+    printf("BLOCK SIZE %ld bytes\n", block_size);
+    printf("TOTAL BYTES %ld bytes\n", filelen);
+    printf("TIME %ld miliseconds\n", miliseconds);
 
     fclose(fp);
     return 0;
