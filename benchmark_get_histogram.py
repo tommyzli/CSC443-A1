@@ -21,5 +21,5 @@ FILE_SIZE = "104857600"  # 100 MB
 if __name__ == "__main__":
     for block_size, name in BLOCK_SIZES:
         print("---- {} ----".format(name))
-        subprocess.call(["./get_histogram", "/root/myDocuments/CSC443/tommys/CSC443/big_file", block_size])
+        subprocess.call(["./get_histogram", "big_file", block_size])
         print("------------")
