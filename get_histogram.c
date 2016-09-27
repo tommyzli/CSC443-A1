@@ -85,13 +85,13 @@ int main(int argc, char* argv[]) {
 
     int i;
     for (i = 0; i < histogram_length; i++) {
-        //printf("%c %ld\n", i + 'A', hist[i]);
+        printf("%c %ld\n", i + 'A', hist[i]);
     }
 
     printf("BLOCK SIZE %ld bytes\n", block_size);
     printf("TOTAL BYTES %ld bytes\n", filelen);
     printf("TIME %ld miliseconds\n", miliseconds);
-    printf("RATE %ld\n", filelen/miliseconds/1000);
+    printf("RATE %ld bytes/second\n", filelen/miliseconds/1000);
 
     fclose(fp);
     return 0;
