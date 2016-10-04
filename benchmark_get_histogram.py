@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import subprocess
+import os
+
 
 BLOCK_SIZES = [
     ("100", "100B"),
@@ -15,11 +17,18 @@ BLOCK_SIZES = [
     ("3145728", "3MB"),
 ]
 
-# FILE_SIZE = "10485760"  # 10 MB
-FILE_SIZE = "104857600"  # 100 MB
+FILE_SIZE = "10485760"  # 10 MB
+# FILE_SIZE = "104857600"  # 100 MB
 
 if __name__ == "__main__":
     for block_size, name in BLOCK_SIZES:
-        print("---- {} ----".format(name))
-        subprocess.call(["./get_histogram", "big_file", block_size])
-        print("------------")
+        print("-------- {} --------".format(name))
+
+        for _ in range(0, 5):
+            subprocess.call(["./create_random_file", "big_file", FILE_SIZE, "524288", "--persist-file", "--no-output"])
+
+            subprocess.call(["./get_histogram", "big_file", block_size])
+
+            os.remove("big_file")
+
+        print("--------------------")
