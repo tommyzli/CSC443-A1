@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/timeb.h>
 
 void random_array(char *array, long bytes) {
@@ -11,7 +12,19 @@ void random_array(char *array, long bytes) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 4) {
+    int remove_file_after_completion = 1;
+    int print_result = 1;
+    if (argc >= 5) {
+        // check for optional arguments
+        int index;
+        for (index = 4; index < argc; index++) {
+            if (strcmp(argv[index], "--persist-file") == 0) {
+                remove_file_after_completion = 0;
+            } else if (strcmp(argv[index], "--no-output") == 0) {
+                print_result = 0;
+            }
+        }
+    } else if (argc != 4) {
         printf("Invalid amount of arguments, please input the format:\n");
         printf("./create_random_file <filename> <total_bytes> <block_size>\n");
         exit(1);
@@ -77,11 +90,12 @@ int main(int argc, char* argv[]) {
     }
 
     fclose(fp);
-    remove(file_name);
+    if (remove_file_after_completion) {
+        remove(file_name);
+    }
 
-    printf("Total bytes written: %ld\n", total_bytes);
-    printf("Block size: %ld\n", block_size);
-    printf("Total write time in ms: %ld\n", execution_time_in_ms);
-    printf("Rate in bytes/s: %ld\n", total_bytes / execution_time_in_ms / 1000);
+    if (print_result) {
+        printf("BLOCK_SIZE: %ld    RATE IN BYTES/S: %ld    TIME IN MS: %ld\n", block_size, total_bytes / execution_time_in_ms / 1000, execution_time_in_ms);
+    }
     return 0;
 }
