@@ -60,7 +60,10 @@ int get_histogram(FILE *file_ptr,
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    int print_histogram = 1;
+    if (argc == 4 && strcmp(argv[3], "--no-histogram") == 0) {
+        print_histogram = 0;
+    } else if (argc != 3) {
         printf("Invalid amount of arguments, please input the format:\n");
         printf("./get_histogram <filename> <block_size>\n");
         exit(1);
@@ -83,9 +86,11 @@ int main(int argc, char* argv[]) {
 
     get_histogram(fp, hist, block_size, &miliseconds, &filelen);
 
-    int i;
-    for (i = 0; i < histogram_length; i++) {
-        printf("%c %ld\n", i + 'A', hist[i]);
+    if (print_histogram) {
+        int i;
+        for (i = 0; i < histogram_length; i++) {
+            printf("%c %ld\n", i + 'A', hist[i]);
+        }
     }
 
     printf("BLOCK SIZE: %ld    RATE IN BYTES/S: %ld    TIME IN MS: %ld\n", block_size, filelen / miliseconds / 1000, miliseconds);
