@@ -24,7 +24,7 @@ if __name__ == "__main__":
     for block_size, name in BLOCK_SIZES:
         print("-------- {} --------".format(name))
 
-        for i in range(0, 5):
+        for _ in range(0, 5):
             subprocess.call(["./create_random_file", "big_file", FILE_SIZE, "4096", "--persist-file", "--no-output"])
             code = subprocess.call(["./get_histogram", "big_file", block_size, "--no-histogram"])
             if code != 0:
