@@ -88,10 +88,7 @@ int main(int argc, char* argv[]) {
         printf("%c %ld\n", i + 'A', hist[i]);
     }
 
-    printf("BLOCK SIZE %ld bytes\n", block_size);
-    printf("TOTAL BYTES %ld bytes\n", filelen);
-    printf("TIME %ld miliseconds\n", miliseconds);
-    printf("RATE %ld bytes/second\n", filelen/miliseconds/1000);
+    printf("BLOCK SIZE: %ld    RATE IN BYTES/S: %ld    TIME IN MS: %ld\n", block_size, filelen / miliseconds / 1000, miliseconds);
 
     fclose(fp);
     return 0;
